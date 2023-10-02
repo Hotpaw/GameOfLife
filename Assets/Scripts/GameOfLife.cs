@@ -1,7 +1,5 @@
 
-using System.Collections;
 using System.Collections.Generic;
-using System.Drawing;
 using UnityEngine;
 
 public class GameOfLife : MonoBehaviour
@@ -81,10 +79,11 @@ public class GameOfLife : MonoBehaviour
         foreach (var cell in deadCells)
         {
             cell.alive = false;
-
+            
         }
         foreach (var cell in aliveCells)
         {
+            cell.GetComponent<Cell>().spriteRenderer.color = new(100f, 2f, 2f);
             cell.alive = true;
         }
         deadCells.Clear();
