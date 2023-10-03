@@ -11,13 +11,14 @@ public class GameOfLife : MonoBehaviour
     int spawnChancePercentage = 15;
     int neighboursAlive = 0;
 
+    public int targetFrameRate;
     List<Cell> aliveCells = new List<Cell>();
     List<Cell> deadCells = new List<Cell>();
     void Start()
     {
         //Lower framerate makes it easier to test and see whats happening.
         QualitySettings.vSyncCount = 0;
-        Application.targetFrameRate = 4;
+        Application.targetFrameRate = targetFrameRate;
 
         //Calculate our grid depending on size and cellSize
         numberOfColums = (int)Mathf.Floor((Camera.main.orthographicSize *
@@ -47,7 +48,7 @@ public class GameOfLife : MonoBehaviour
                 //Random check to see if it should be alive
                 if (Random.Range(0, 100) < spawnChancePercentage)
                 {
-                    cells[x, y].alive = true;
+                //    cells[x, y].alive = true;
                 }
 
                 cells[x, y].UpdateStatus();
@@ -58,7 +59,7 @@ public class GameOfLife : MonoBehaviour
     }
     void Update()
     {
-        //TODO: Calculate next generation
+        ChangeFrameRate();
 
         UpdateBuffer();
 
@@ -69,9 +70,27 @@ public class GameOfLife : MonoBehaviour
 
                 GetNeighbours(x, y);
                 cells[x, y].UpdateStatus();
+
             }
         }
 
+    }
+
+    private void ChangeFrameRate()
+    {
+        if (Input.GetKeyDown(KeyCode.UpArrow))
+        {
+            targetFrameRate++;
+        }
+        else if (Input.GetKeyDown(KeyCode.DownArrow))
+        {
+            targetFrameRate--;
+        }
+        else if (Input.GetKeyDown(KeyCode.R))
+        {
+            targetFrameRate = 4;
+        }
+        Application.targetFrameRate = targetFrameRate;
     }
 
     private void UpdateBuffer()
@@ -79,11 +98,11 @@ public class GameOfLife : MonoBehaviour
         foreach (var cell in deadCells)
         {
             cell.alive = false;
-            
+
         }
         foreach (var cell in aliveCells)
         {
-            cell.GetComponent<Cell>().spriteRenderer.color = new(100f, 2f, 2f);
+
             cell.alive = true;
         }
         deadCells.Clear();
@@ -116,17 +135,33 @@ public class GameOfLife : MonoBehaviour
 
     private void CheckifCellisAlive(int x, int y)
     {
-        if (cells[x, y].alive && neighboursAlive == 2 || cells[x, y].alive && neighboursAlive == 3)
+        if (cells[x, y].alive && neighboursAlive == 3)
+        {
+            if (cells[x, y].spriteRenderer != null)
+            {
+                cells[x, y].spriteRenderer.color = Color.yellow;
+            }
+        }
+        else if (!cells[x, y].alive && neighboursAlive == 3)
         {
 
-        }
-        if (!cells[x, y].alive && neighboursAlive == 3)
-        {
             aliveCells.Add(cells[x, y]);
         }
-        if (cells[x, y].alive && neighboursAlive < 2 || cells[x, y].alive && neighboursAlive > 3)
+        else if (cells[x, y].alive && neighboursAlive < 2 || cells[x, y].alive && neighboursAlive > 3)
         {
+            if (cells[x, y].spriteRenderer != null)
+            {
+                cells[x, y].spriteRenderer.color = Color.green;
+            }
             deadCells.Add(cells[x, y]);
+        }
+        else if (cells[x, y].alive && neighboursAlive == 2)
+        {
+
+            if (cells[x, y].spriteRenderer != null)
+            {
+                cells[x, y].spriteRenderer.color = Color.blue;
+            }
         }
         neighboursAlive = 0;
     }
