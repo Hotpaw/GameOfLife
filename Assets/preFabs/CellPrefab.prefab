@@ -99,6 +99,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   alive: 0
+  HexStringToChangeToColorRGB: {r: 0.6132076, g: 0.5516964, b: 0.30949628, a: 0}
   spriteRenderer: {fileID: 8984591222551403631}
 --- !u!61 &-5529889037665066321
 BoxCollider2D:

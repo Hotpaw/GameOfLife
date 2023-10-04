@@ -10,6 +10,7 @@ public class GameOfLife : MonoBehaviour
     int numberOfColums, numberOfRows;
     int spawnChancePercentage = 15;
     int neighboursAlive = 0;
+   
 
     public int targetFrameRate;
     List<Cell> aliveCells = new List<Cell>();
@@ -48,7 +49,7 @@ public class GameOfLife : MonoBehaviour
                 //Random check to see if it should be alive
                 if (Random.Range(0, 100) < spawnChancePercentage)
                 {
-                //    cells[x, y].alive = true;
+                  cells[x, y].alive = true;
                 }
 
                 cells[x, y].UpdateStatus();
@@ -67,12 +68,13 @@ public class GameOfLife : MonoBehaviour
         {
             for (int x = 0; x < numberOfColums; x++)
             {
-
+               
                 GetNeighbours(x, y);
                 cells[x, y].UpdateStatus();
 
             }
         }
+       
 
     }
 
@@ -80,6 +82,7 @@ public class GameOfLife : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
+            print("Fram Up");
             targetFrameRate++;
         }
         else if (Input.GetKeyDown(KeyCode.DownArrow))
@@ -90,6 +93,7 @@ public class GameOfLife : MonoBehaviour
         {
             targetFrameRate = 4;
         }
+        Debug.Log(targetFrameRate);
         Application.targetFrameRate = targetFrameRate;
     }
 
@@ -107,6 +111,7 @@ public class GameOfLife : MonoBehaviour
         }
         deadCells.Clear();
         aliveCells.Clear();
+       
     }
 
     public void GetNeighbours(int x, int y)
