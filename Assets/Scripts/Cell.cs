@@ -5,37 +5,54 @@ using UnityEngine;
 
 public class Cell : MonoBehaviour
 {
-    GameOfLife gm;
+    public GameOfLife gm;
     public bool alive;
-    float timer;
+    int generationsLived;
 
     public Color HexStringToChangeToColorRGB;
-    string HexColorString;
+
     public SpriteRenderer spriteRenderer;
     public void Start()
     {
-      
-      
-        gm = GetComponent<GameOfLife>();
-      
+
+
+
+
     }
     public void UpdateStatus()
     {
+       
         spriteRenderer ??= GetComponent<SpriteRenderer>();
 
-       
+
 
         spriteRenderer.enabled = alive;
         if (alive)
         {
 
-            spriteRenderer.color = HexStringToColor("#9C8D4F");
+            if (generationsLived > 50 && generationsLived < 99)
+            {
+
+                spriteRenderer.color = HexStringToColor("#FFE67F");
+            }
+            else if (generationsLived > 100 && generationsLived < 199)
+            {
+                spriteRenderer.color = HexStringToColor("#9C8D4F");
+            }
+            else if (generationsLived > 200 && generationsLived < 299)
+            {
+                spriteRenderer.color = HexStringToColor("#9C8D4F");
+            }
+            generationsLived++;
         }
         else
         {
-            timer = 0;
+           
+            generationsLived = 0;
         }
+
     }
+
 
     private Color32 HexStringToColor(string HexString)
     {

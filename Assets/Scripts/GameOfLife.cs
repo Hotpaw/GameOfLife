@@ -10,7 +10,8 @@ public class GameOfLife : MonoBehaviour
     int numberOfColums, numberOfRows;
     int spawnChancePercentage = 15;
     int neighboursAlive = 0;
-   
+
+    public int LongestLivingGeneration;
 
     public int targetFrameRate;
     List<Cell> aliveCells = new List<Cell>();
@@ -77,6 +78,7 @@ public class GameOfLife : MonoBehaviour
        
 
     }
+   
 
     private void ChangeFrameRate()
     {
@@ -93,7 +95,7 @@ public class GameOfLife : MonoBehaviour
         {
             targetFrameRate = 4;
         }
-        Debug.Log(targetFrameRate);
+    
         Application.targetFrameRate = targetFrameRate;
     }
 
