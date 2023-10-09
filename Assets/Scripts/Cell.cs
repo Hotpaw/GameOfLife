@@ -9,8 +9,6 @@ public class Cell : MonoBehaviour
     public bool alive;
     int generationsLived;
 
-    public Color HexStringToChangeToColorRGB;
-
     public SpriteRenderer spriteRenderer;
     public void Start()
     {
@@ -39,7 +37,7 @@ public class Cell : MonoBehaviour
             {
                 spriteRenderer.color = HexStringToColor("#9C8D4F");
             }
-            else if (generationsLived > 200 && generationsLived < 299)
+            else if (generationsLived > 200)
             {
                 spriteRenderer.color = HexStringToColor("#9C8D4F");
             }

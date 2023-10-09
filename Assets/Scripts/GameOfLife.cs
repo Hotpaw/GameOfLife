@@ -1,6 +1,7 @@
 
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameOfLife : MonoBehaviour
 {
@@ -18,10 +19,28 @@ public class GameOfLife : MonoBehaviour
     List<Cell> deadCells = new List<Cell>();
     void Start()
     {
+        SetFrameRate();
+
+        InitializeGrid();
+    }
+    void Update()
+    {
+        ReloadScene();
+
+        ChangeFrameRate();
+
+        UpdateBuffer();
+
+        LoopThroughGrid();
+    }
+    private void SetFrameRate()
+    {
         //Lower framerate makes it easier to test and see whats happening.
         QualitySettings.vSyncCount = 0;
         Application.targetFrameRate = targetFrameRate;
-
+    }
+    private void InitializeGrid()
+    {
         //Calculate our grid depending on size and cellSize
         numberOfColums = (int)Mathf.Floor((Camera.main.orthographicSize *
             Camera.main.aspect * 2) / cellSize);
@@ -50,7 +69,7 @@ public class GameOfLife : MonoBehaviour
                 //Random check to see if it should be alive
                 if (Random.Range(0, 100) < spawnChancePercentage)
                 {
-                  cells[x, y].alive = true;
+                    cells[x, y].alive = true;
                 }
 
                 cells[x, y].UpdateStatus();
@@ -59,27 +78,18 @@ public class GameOfLife : MonoBehaviour
 
         }
     }
-    void Update()
+    private void ReloadScene()
     {
-        ChangeFrameRate();
-
-        UpdateBuffer();
-
-        for (int y = 0; y < numberOfRows; y++)
+        if (Input.GetKey(KeyCode.R))
         {
-            for (int x = 0; x < numberOfColums; x++)
+            foreach (var cell in cells)
             {
-               
-                GetNeighbours(x, y);
-                cells[x, y].UpdateStatus();
-
+                Destroy(cell.gameObject);
             }
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            InitializeGrid();
         }
-       
-
     }
-   
-
     private void ChangeFrameRate()
     {
         if (Input.GetKeyDown(KeyCode.UpArrow))
@@ -98,7 +108,6 @@ public class GameOfLife : MonoBehaviour
     
         Application.targetFrameRate = targetFrameRate;
     }
-
     private void UpdateBuffer()
     {
         foreach (var cell in deadCells)
@@ -115,7 +124,19 @@ public class GameOfLife : MonoBehaviour
         aliveCells.Clear();
        
     }
+    private void LoopThroughGrid()
+    {
+        for (int y = 0; y < numberOfRows; y++)
+        {
+            for (int x = 0; x < numberOfColums; x++)
+            {
 
+                GetNeighbours(x, y);
+                cells[x, y].UpdateStatus();
+
+            }
+        }
+    }
     public void GetNeighbours(int x, int y)
     {
         int startY = Mathf.Max(0, y - 1);
@@ -139,7 +160,6 @@ public class GameOfLife : MonoBehaviour
         }
         CheckifCellisAlive(x, y);
     }
-
     private void CheckifCellisAlive(int x, int y)
     {
         if (cells[x, y].alive && neighboursAlive == 3)
