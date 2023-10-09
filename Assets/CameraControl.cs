@@ -15,5 +15,5 @@ public class CameraControl : MonoBehaviour
         ortographicSize = Mathf.Clamp(ortographicSize, minFov, maxFov);
         Camera.main.orthographicSize = ortographicSize;
     }
-   
+
 }

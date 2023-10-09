@@ -5,18 +5,21 @@ using UnityEngine.SceneManagement;
 
 public class GameOfLife : MonoBehaviour
 {
+    [Header("GameObjects")]
     public GameObject cellPrefab;
-    Cell[,] cells;
-    float cellSize = 0.25f; //Size of our cells
+
+    [Header("Variables")]
+    public int LongestLivingGeneration;
+    public int targetFrameRate;
     int numberOfColums, numberOfRows;
     int spawnChancePercentage = 15;
     int neighboursAlive = 0;
+    float cellSize = 0.25f; //Size of our cells,
 
-    public int LongestLivingGeneration;
-
-    public int targetFrameRate;
+    [Header("List And Arrays")]
     List<Cell> aliveCells = new List<Cell>();
     List<Cell> deadCells = new List<Cell>();
+    Cell[,] cells;
     void Start()
     {
         SetFrameRate();
@@ -105,7 +108,7 @@ public class GameOfLife : MonoBehaviour
         {
             targetFrameRate = 4;
         }
-    
+
         Application.targetFrameRate = targetFrameRate;
     }
     private void UpdateBuffer()
@@ -122,7 +125,7 @@ public class GameOfLife : MonoBehaviour
         }
         deadCells.Clear();
         aliveCells.Clear();
-       
+
     }
     private void LoopThroughGrid()
     {
@@ -191,6 +194,7 @@ public class GameOfLife : MonoBehaviour
             }
         }
         neighboursAlive = 0;
+       
     }
 
-}
+} // You have reached the end of the code. Thank you for visiting us, have a good day.

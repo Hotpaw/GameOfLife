@@ -10,16 +10,10 @@ public class Cell : MonoBehaviour
     int generationsLived;
 
     public SpriteRenderer spriteRenderer;
-    public void Start()
-    {
 
-
-
-
-    }
     public void UpdateStatus()
     {
-       
+
         spriteRenderer ??= GetComponent<SpriteRenderer>();
 
 
@@ -45,9 +39,10 @@ public class Cell : MonoBehaviour
         }
         else
         {
-           
+
             generationsLived = 0;
         }
+        Debug.Log(generationsLived);
 
     }
 
@@ -57,10 +52,6 @@ public class Cell : MonoBehaviour
         UnityEngine.ColorUtility.TryParseHtmlString(HexString, out Color hexcolor);
         return hexcolor;
     }
-
-
-
-
 
 }
 

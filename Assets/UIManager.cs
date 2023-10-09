@@ -8,11 +8,11 @@ public class UIManager : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
-      
+
     }
     private void Update()
     {
-        if(Input.GetKeyUp(KeyCode.Escape))
+        if (Input.GetKeyUp(KeyCode.Escape))
         {
             SetWindowVisibility();
         }
